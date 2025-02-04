@@ -1,4 +1,5 @@
 from .base_page import BasePage
+from .register_page import RegisterPage
 from .locators import LoginPageLocators
 
 
@@ -20,3 +21,8 @@ class LoginPage(BasePage):
             selector=LoginPageLocators.ERROR_MESSAGE, state="visible"
         )
         return self.page.locator(LoginPageLocators.ERROR_MESSAGE).text_content().strip()
+
+    def go_to_register_option(self) -> "RegisterPage":
+        self.page.locator(LoginPageLocators.CREATE_USER_BUTTON).click()
+        self.wait_for_page_load()
+        return RegisterPage(self.page)

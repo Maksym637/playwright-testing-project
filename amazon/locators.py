@@ -30,7 +30,12 @@ class LoginPageLocators:
 class RegisterPageLocators:
     """Locators for the registration page elements"""
 
-    pass
+    NAME_INPUT = "#ap_customer_name"
+    EMAIL_INPUT = "#ap_email"
+    PASSWORD_INPUT = "#ap_password"
+    PASSWORD_CHECK_INPUT = "#ap_password_check"
+    CONTINUE_VERIFY_BUTTON = "//input[@class='a-button-input']"
+    ERROR_MESSAGES = "//div[@class='a-alert-content']"
 
 
 class CartPageLocators:

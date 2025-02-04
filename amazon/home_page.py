@@ -68,6 +68,7 @@ class HomePage(BasePage):
             LoginPage: Returns an instance of the LoginPage class
         """
         self.page.locator(HomePageLocators.CUSTOMER_PROFILE_OPTION).first.click()
+        self.wait_for_page_load()
         return LoginPage(self.page)
 
     def select_option_from_menu(self, menu: str, option: str) -> "HomePage":
@@ -102,5 +103,6 @@ class HomePage(BasePage):
         )
 
         visible_product_type_element.click(force=True)
+        self.wait_for_page_load()
 
         return ProductsPage(self.page)

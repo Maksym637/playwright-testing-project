@@ -1,5 +1,6 @@
 import pytest
 from amazon.home_page import HomePage
+from .verification_data import ERROR_MSGS, NAV_BAR_ITEMS
 
 
 def test_login_page(browser) -> None:
@@ -25,9 +26,38 @@ def test_login_page(browser) -> None:
     )
 
 
-# TC - 2
-def test_register_page():
-    pass
+@pytest.mark.parametrize(
+    "name, email, password, re_password, expected_error_msg",
+    [
+        (" ", " ", " ", " ", ERROR_MSGS["empty"]),
+        ("tuser", "tuser!gmail.com", "Tpass123", "Tpass123", ERROR_MSGS["email"]),
+        ("tuser", "tuser@gmail.com", "Tpass123", "Tpass1234", ERROR_MSGS["password"]),
+    ],
+)
+def test_register_page(
+    browser, name, email, password, re_password, expected_error_msg
+) -> None:
+    """
+    This test case verifies if an error messages appear
+    when incorrect user data is entered
+    """
+    home_page = HomePage(browser)
+
+    actual_error_msgs = (
+        home_page.navigate_to_website()
+        .reload_page()
+        .go_to_all_menu()
+        .go_to_sign_in_option()
+        .go_to_register_option()
+        .enter_name(name)
+        .enter_email(email)
+        .enter_password(password)
+        .re_enter_password(re_password)
+        .click_continue_verify_button()
+        .get_error_messages()
+    )
+
+    assert actual_error_msgs == expected_error_msg
 
 
 def test_products_page(browser) -> None:
@@ -54,42 +84,9 @@ def test_cart_page():
 @pytest.mark.parametrize(
     "lang, iso, expected_nav_bar_items",
     [
-        (
-            "es",
-            "US",
-            [
-                "Todo",
-                "Ofertas del Día",
-                "Servicio al Cliente",
-                "Listas",
-                "Tarjetas de Regalo",
-                "Vender",
-            ],
-        ),
-        (
-            "de",
-            "DE",
-            [
-                "Alle",
-                "Angebote des Tages",
-                "Kundenservice",
-                "Wunschlisten",
-                "Geschenkkarten",
-                "Verkaufen bei Amazon",
-            ],
-        ),
-        (
-            "en",
-            "US",
-            [
-                "All",
-                "Today's Deals",
-                "Customer Service",
-                "Registry",
-                "Gift Cards",
-                "Sell",
-            ],
-        ),
+        ("es", "US", NAV_BAR_ITEMS["es"]),
+        ("de", "DE", NAV_BAR_ITEMS["de"]),
+        ("en", "US", NAV_BAR_ITEMS["en"]),
     ],
 )
 def test_home_page(browser, lang, iso, expected_nav_bar_items) -> None:
