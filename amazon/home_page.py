@@ -1,7 +1,7 @@
 """Module for initializing the home page"""
 
 import logging
-from playwright.sync_api import expect
+from playwright.sync_api import Page, expect
 from .base_page import BasePage
 from .login_page import LoginPage
 from .products_page import ProductsPage
@@ -12,7 +12,7 @@ from utils.constants import TimeConstants
 class HomePage(BasePage):
     """Represents the home page"""
 
-    def __init__(self, page) -> None:
+    def __init__(self, page: Page) -> None:
         """
         Initializes the HomePage with a Playwright Page instance
 
@@ -22,6 +22,12 @@ class HomePage(BasePage):
         super().__init__(page)
 
     def go_to_language_icon(self) -> "HomePage":
+        """
+        Navigates to the language selection icon and hovers over it
+
+        Returns:
+            HomePage: Returns the current instance
+        """
         logging.info("Navigating to the language icon")
         language_icon = self.page.locator(HomePageLocators.LANGUAGE_ICON)
 
@@ -35,6 +41,16 @@ class HomePage(BasePage):
         return self
 
     def select_language(self, lang: str, iso: str) -> "HomePage":
+        """
+        Selects a language from the language pop-up window
+
+        Args:
+            lang (str): The name of the language to select
+            iso (str): The ISO code corresponding to the language
+
+        Returns:
+            HomePage: Returns the current instance
+        """
         logging.info("Selecting the '%s' language in the pop-up window", lang)
 
         self.page.wait_for_selector(
@@ -49,6 +65,12 @@ class HomePage(BasePage):
         return self
 
     def get_nav_bar_items(self) -> list[str]:
+        """
+        Retrieves the text content of all visible navigation items in the header
+
+        Returns:
+            list[str]: A list of navigation item texts, excluding the last one
+        """
         logging.info("Getting the text of all navigation items in the header")
         nav_bar_items = self.page.locator(HomePageLocators.NAV_BAR_ITEMS).all()
 
@@ -87,6 +109,16 @@ class HomePage(BasePage):
         return LoginPage(self.page)
 
     def select_option_from_menu(self, menu: str, option: str) -> "HomePage":
+        """
+        Selects an option from the given menu in the navigation panel
+
+        Args:
+            menu (str): The name of the menu to select
+            option (str): The option to choose from within the menu
+
+        Returns:
+            HomePage: Returns the current instance
+        """
         logging.info("Selecting the '%s' option from the '%s' menu", option, menu)
 
         self.page.wait_for_selector(
@@ -114,6 +146,15 @@ class HomePage(BasePage):
         return self
 
     def select_product_type_from_option(self, product_type: str) -> ProductsPage:
+        """
+        Selects a product type from a category option
+
+        Args:
+            product_type (str): The name of the product type to select
+
+        Returns:
+            ProductsPage: Returns an instance of the ProductsPage class
+        """
         logging.info(
             "Selecting the '%s' product type from the given option", product_type
         )

@@ -1,9 +1,12 @@
+"""Module containing all UI tests"""
+
 import pytest
+from playwright.sync_api import Page
 from amazon.home_page import HomePage
 from .verification_data import ERROR_MSGS, NAV_BAR_ITEMS
 
 
-def test_login_page(browser) -> None:
+def test_login_page(browser: Page) -> None:
     """
     This test case verifies if an error pop-up with the appropriate
     error message appears when incorrect user data is entered
@@ -35,7 +38,12 @@ def test_login_page(browser) -> None:
     ],
 )
 def test_register_page(
-    browser, name, email, password, re_password, expected_error_msg
+    browser: Page,
+    name: str,
+    email: str,
+    password: str,
+    re_password: str,
+    expected_error_msg: list[str],
 ) -> None:
     """
     This test case verifies if an error messages appear
@@ -60,7 +68,7 @@ def test_register_page(
     assert actual_error_msgs == expected_error_msg
 
 
-def test_products_page(browser) -> None:
+def test_products_page(browser: Page) -> None:
     """This test case verifies if 10 products are displayed on the products page"""
     home_page = HomePage(browser)
 
@@ -77,8 +85,8 @@ def test_products_page(browser) -> None:
 
 
 # TC - 4
-def test_cart_page():
-    pass
+def test_cart_page(browser: Page) -> None:
+    """..."""
 
 
 @pytest.mark.parametrize(
@@ -89,7 +97,9 @@ def test_cart_page():
         ("en", "US", NAV_BAR_ITEMS["en"]),
     ],
 )
-def test_home_page(browser, lang, iso, expected_nav_bar_items) -> None:
+def test_home_page(
+    browser: Page, lang: str, iso: str, expected_nav_bar_items: list[str]
+) -> None:
     """
     This test case verifies if text is internalized correctly
     when switching to another language

@@ -51,6 +51,9 @@ class BasePage:
         )
 
     def wait_for_page_load(self) -> None:
+        """
+        Waits for the page to fully load by ensuring the document ready state is 'complete'
+        """
         logging.info("Waiting for the page to reload")
         self.page.wait_for_function("document.readyState === 'complete'")
 

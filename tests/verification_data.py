@@ -1,3 +1,5 @@
+"""Module containing expected test data"""
+
 ERROR_MSGS = {
     "empty": [
         "Enter your name",
