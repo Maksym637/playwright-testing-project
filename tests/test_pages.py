@@ -1,18 +1,7 @@
 import pytest
-from playwright.sync_api import sync_playwright
 from amazon.home_page import HomePage
 
 
-@pytest.fixture
-def browser():
-    with sync_playwright() as play:
-        browser = play.chromium.launch(headless=False, args=["--start-maximized"])
-        page = browser.new_page(no_viewport=True)
-        yield page
-        browser.close()
-
-
-# TC - 1
 def test_login_page(browser) -> None:
     """
     This test case verifies if an error pop-up with the appropriate
@@ -41,7 +30,6 @@ def test_register_page():
     pass
 
 
-# TC - 3
 def test_products_page(browser) -> None:
     """This test case verifies if 10 products are displayed on the products page"""
     home_page = HomePage(browser)
@@ -63,6 +51,60 @@ def test_cart_page():
     pass
 
 
-# TC - 5
-def test_home_page():
-    pass
+@pytest.mark.parametrize(
+    "lang, iso, expected_nav_bar_items",
+    [
+        (
+            "es",
+            "US",
+            [
+                "Todo",
+                "Ofertas del Día",
+                "Servicio al Cliente",
+                "Listas",
+                "Tarjetas de Regalo",
+                "Vender",
+            ],
+        ),
+        (
+            "de",
+            "DE",
+            [
+                "Alle",
+                "Angebote des Tages",
+                "Kundenservice",
+                "Wunschlisten",
+                "Geschenkkarten",
+                "Verkaufen bei Amazon",
+            ],
+        ),
+        (
+            "en",
+            "US",
+            [
+                "All",
+                "Today's Deals",
+                "Customer Service",
+                "Registry",
+                "Gift Cards",
+                "Sell",
+            ],
+        ),
+    ],
+)
+def test_home_page(browser, lang, iso, expected_nav_bar_items) -> None:
+    """
+    This test case verifies if text is internalized correctly
+    when switching to another language
+    """
+    home_page = HomePage(browser)
+
+    actual_nav_bar_items = (
+        home_page.navigate_to_website()
+        .reload_page()
+        .go_to_language_icon()
+        .select_language(lang, iso)
+        .get_nav_bar_items()
+    )
+
+    assert actual_nav_bar_items == expected_nav_bar_items

@@ -4,6 +4,11 @@
 class HomePageLocators:
     """Locators for the home page elements"""
 
+    LANGUAGE_ICON = "//span[@class='icp-nav-link-inner']"
+    LANGUAGE_OPTION = (
+        lambda LANG, ISO: f"//div[@id='nav-flyout-icp']//a[@lang='{LANG}-{ISO}']"
+    )
+    NAV_BAR_ITEMS = "//div[@id='nav-main']//a"
     NAV_HAMBURGER_MENU = "#nav-hamburger-menu"
     CUSTOMER_PROFILE_OPTION = "#hmenu-customer-profile"
     MENU_LIST = "//div[@class='hmenu-item hmenu-title ' and @role='heading']"

@@ -1,5 +1,6 @@
 """Module for initializing the home page"""
 
+from playwright.sync_api import expect
 from .base_page import BasePage
 from .login_page import LoginPage
 from .products_page import ProductsPage
@@ -18,6 +19,36 @@ class HomePage(BasePage):
             page (Page): The Playwright page object representing the current browser context
         """
         super().__init__(page)
+
+    def go_to_language_icon(self) -> "HomePage":
+        language_icon = self.page.locator(HomePageLocators.LANGUAGE_ICON)
+
+        # TODO explanation
+        for _ in range(3):
+            language_icon.hover()
+
+        return self
+
+    def select_language(self, lang: str, iso: str) -> "HomePage":
+        self.page.wait_for_selector(
+            selector=HomePageLocators.LANGUAGE_OPTION(lang, iso), state="visible"
+        )
+        self.page.locator(HomePageLocators.LANGUAGE_OPTION(lang, iso)).click()
+        expect(self.page.locator(HomePageLocators.LANGUAGE_ICON)).to_have_text(
+            lang.upper()
+        )
+        return self
+
+    def get_nav_bar_items(self) -> list[str]:
+        nav_bar_items = self.page.locator(HomePageLocators.NAV_BAR_ITEMS).all()
+
+        visible_nav_bar_items = [
+            element.text_content().strip()
+            for element in nav_bar_items
+            if element.is_visible()
+        ]
+
+        return visible_nav_bar_items[0:-1]
 
     def go_to_all_menu(self) -> "HomePage":
         """
