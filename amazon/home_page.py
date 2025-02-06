@@ -82,6 +82,24 @@ class HomePage(BasePage):
 
         return visible_nav_bar_items[0:-1]
 
+    def go_to_cart_icon(self) -> "HomePage":
+        logging.info("Navigating to the cart icon")
+        self.page.locator(HomePageLocators.CART_ICON).click()
+
+        self.wait_for_page_load()
+
+        return self
+
+    def get_product_title(self) -> str:
+        logging.info("Getting the product title")
+        return self.page.locator(HomePageLocators.PRODUCT_TITLE).text_content().strip()
+
+    def remove_product_from_cart(self) -> "HomePage":
+        logging.info("Removing a product from the cart")
+        self.page.locator(HomePageLocators.TRASH_BUTTON).click()
+
+        return self
+
     def go_to_all_menu(self) -> "HomePage":
         """
         Clicks on the hamburger menu to open the navigation menu

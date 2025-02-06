@@ -10,6 +10,9 @@ class HomePageLocators:
     )
     NAV_BAR_ITEMS = "//div[@id='nav-main']//a"
     NAV_HAMBURGER_MENU = "#nav-hamburger-menu"
+    CART_ICON = "//header//a[@id='nav-cart']"
+    PRODUCT_TITLE = "//li[@class='sc-item-product-title-cont']"
+    TRASH_BUTTON = "//span[@class='a-icon a-icon-small-trash']"
     CUSTOMER_PROFILE_OPTION = "#hmenu-customer-profile"
     MENU_LIST = "//div[@class='hmenu-item hmenu-title ' and @role='heading']"
     OPTION_LIST = "../following-sibling::li/a[@class='hmenu-item']"
@@ -48,3 +51,5 @@ class ProductsPageLocators:
     """Locators for the product listing and details page elements"""
 
     PRODUCT_LIST = "//div[@role='listitem']"
+    PRODUCT_TITLE = "//h1/span[@id='productTitle']"
+    ADD_TO_CART_BUTTON = "//input[@id='add-to-cart-button']"

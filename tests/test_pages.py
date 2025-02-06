@@ -3,6 +3,8 @@
 import pytest
 from playwright.sync_api import Page
 from amazon.home_page import HomePage
+from amazon.products_page import ProductsPage
+from utils.functions import are_strings_similar
 from .verification_data import ERROR_MSGS, NAV_BAR_ITEMS
 
 
@@ -84,9 +86,27 @@ def test_products_page(browser: Page) -> None:
     assert actual_products_number == 10
 
 
-# TC - 4
 def test_cart_page(browser: Page) -> None:
-    """..."""
+    """This test case verifies if product is added to the cart page"""
+    home_page = HomePage(browser)
+    products_page = ProductsPage(browser)
+
+    expected_product_title = (
+        home_page.navigate_to_website()
+        .reload_page()
+        .go_to_all_menu()
+        .select_option_from_menu(menu="Shop by Department", option="Electronics")
+        .select_product_type_from_option(product_type="Accessories & Supplies")
+        .select_first_product()
+        .get_product_title()
+    )
+
+    products_page.click_add_to_cart_button()
+    actual_product_title = home_page.go_to_cart_icon().get_product_title()
+
+    home_page.remove_product_from_cart()
+
+    assert are_strings_similar(actual_product_title, expected_product_title)
 
 
 @pytest.mark.parametrize(
