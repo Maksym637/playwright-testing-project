@@ -83,6 +83,12 @@ class HomePage(BasePage):
         return visible_nav_bar_items[0:-1]
 
     def go_to_cart_icon(self) -> "HomePage":
+        """
+        Clicks on the 'Cart' icon in the navigation menu
+
+        Returns:
+            HomePage: Returns the current instance
+        """
         logging.info("Navigating to the cart icon")
         self.page.locator(HomePageLocators.CART_ICON).click()
 
@@ -91,10 +97,22 @@ class HomePage(BasePage):
         return self
 
     def get_product_title(self) -> str:
+        """
+        Retrieves the product title on the home page
+
+        Returns:
+            str: The text content of the product title
+        """
         logging.info("Getting the product title")
         return self.page.locator(HomePageLocators.PRODUCT_TITLE).text_content().strip()
 
     def remove_product_from_cart(self) -> "HomePage":
+        """
+        Clicks on the trash icon, which means removing the product
+
+        Returns:
+            HomePage: Returns the current instance
+        """
         logging.info("Removing a product from the cart")
         self.page.locator(HomePageLocators.TRASH_BUTTON).click()
 

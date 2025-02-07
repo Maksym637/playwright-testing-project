@@ -30,9 +30,17 @@ class ProductsPage(BasePage):
         return len(self.page.locator(ProductsPageLocators.PRODUCT_LIST).all())
 
     def select_first_product(self) -> "ProductsPage":
+        """
+        Selects the first available product from the product list
+
+        Returns:
+            ProductsPage: Returns the current instance
+        """
         logging.info("Selecting the first product")
 
-        # TODO explanation
+        #
+        # Explicit wait that prevents the item from not being clicked
+        #
         self.page.wait_for_timeout(TimeConstants.ITEM_EXPLICIT_WAIT)
 
         self.page.locator(ProductsPageLocators.PRODUCT_LIST).all()[0].click(force=True)
@@ -41,12 +49,24 @@ class ProductsPage(BasePage):
         return self
 
     def get_product_title(self) -> str:
+        """
+        Retrieves the product title on the products page
+
+        Returns:
+            str: The text content of the product title
+        """
         logging.info("Getting the product title")
         return (
             self.page.locator(ProductsPageLocators.PRODUCT_TITLE).text_content().strip()
         )
 
     def click_add_to_cart_button(self) -> "ProductsPage":
+        """
+        Clicks on the 'Add to Cart' button
+
+        Returns:
+            ProductsPage: Returns the current instance
+        """
         logging.info("Clicking on the 'Add to Cart' button")
         self.page.locator(ProductsPageLocators.ADD_TO_CART_BUTTON).click()
 

@@ -11,7 +11,7 @@ class HomePageLocators:
     NAV_BAR_ITEMS = "//div[@id='nav-main']//a"
     NAV_HAMBURGER_MENU = "#nav-hamburger-menu"
     CART_ICON = "//header//a[@id='nav-cart']"
-    PRODUCT_TITLE = "//li[@class='sc-item-product-title-cont']"
+    PRODUCT_TITLE = "//span[@class='a-truncate-full a-offscreen']"
     TRASH_BUTTON = "//span[@class='a-icon a-icon-small-trash']"
     CUSTOMER_PROFILE_OPTION = "#hmenu-customer-profile"
     MENU_LIST = "//div[@class='hmenu-item hmenu-title ' and @role='heading']"
@@ -39,12 +39,6 @@ class RegisterPageLocators:
     PASSWORD_CHECK_INPUT = "#ap_password_check"
     CONTINUE_VERIFY_BUTTON = "//input[@class='a-button-input']"
     ERROR_MESSAGES = "//div[@class='a-alert-content']"
-
-
-class CartPageLocators:
-    """Locators for the cart page elements"""
-
-    pass
 
 
 class ProductsPageLocators:

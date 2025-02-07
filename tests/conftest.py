@@ -22,7 +22,7 @@ def browser(request: FixtureRequest) -> Generator[Page, None, None]:
 
     with sync_playwright() as playwright:
         logging.info("Starting the '%s' test", test_name)
-        browser = playwright.chromium.launch(headless=False, args=["--start-maximized"])
+        browser = playwright.firefox.launch(headless=False)
         page = browser.new_page(no_viewport=True)
 
         yield page
