@@ -14,6 +14,7 @@ Project has the following structure:
 | ----------- | --------|
 | Playwright  | 1.49.1  |
 | Pytest      | 8.3.4   |
+
 These libraries are built in the Python programming language
 - - -
 ### Execute tests:
