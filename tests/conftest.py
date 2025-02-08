@@ -22,7 +22,9 @@ def browser(request: FixtureRequest) -> Generator[Page, None, None]:
 
     with sync_playwright() as playwright:
         logging.info("Starting the '%s' test", test_name)
-        browser = playwright.firefox.launch(headless=False)
+        browser = playwright.chromium.launch(
+            args=["--no-sandbox", "--disable-setuid-sandbox"]
+        )
         page = browser.new_page(no_viewport=True)
 
         yield page

@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  playwright_tests:
+    build: .
+    container_name: playwright_tests
+    tty: true
+    stdin_open: true
