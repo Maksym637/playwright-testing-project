@@ -27,6 +27,12 @@ class ProductsPage(BasePage):
             int: The number of products displayed on the page
         """
         logging.info("Getting the number of all products")
+
+        #
+        # Explicit wait to ensure that all items on the page are loaded
+        #
+        self.page.wait_for_timeout(TimeConstants.ITEM_EXPLICIT_WAIT)
+
         return len(self.page.locator(ProductsPageLocators.PRODUCT_LIST).all())
 
     def select_first_product(self) -> "ProductsPage":
